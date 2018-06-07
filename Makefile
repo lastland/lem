@@ -178,18 +178,18 @@ debug: version share_directory
 
 build-lem: version share_directory
 	make -C src all
-	ln -sf src/main.native lem
+	ln -s src/main.native lem
 
 build-lem-profile: version share_directory
 	make -C src profile
 	ln -sf src/main.p.native lem-profile
 
-
-lem: build-lem
+lem:
+	make build-lem
 
 bin/lem: lem
 	mkdir -p bin
-	cd bin && ln -sf ../src/main.native lem
+	cd bin && ln -s ../src/main.native lem
 
 OCAML-LIB-NON_LGPL =      \
 ocaml-lib/Makefile	  \
@@ -295,6 +295,7 @@ clean:
 	-make -C coq-lib clean
 	-make -C ocaml-lib clean
 	-make -C tex-lib clean
+	-rm -rf bin
 	-rm -f coq-lib/Makefile
 	-rm -f coq-lib/coqharness.vo
 	-rm -f coq-lib/coqharness.glob
